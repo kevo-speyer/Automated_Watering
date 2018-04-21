@@ -29,12 +29,31 @@ void setup() {
     pinMode(sensorVCC, OUTPUT); 
     digitalWrite(sensorVCC, LOW);
     digitalWrite(out_pin, LOW); 
+    
+    // Sense Humidity
+            // power the sensor  
+        digitalWrite(sensorVCC, HIGH); //Now there is current passing through soil sensor
+        
+        delay(100); //make sure the sensor is powered
+        
+        // read the value from the sensor:
+        sensorValue = analogRead(sensorPin); 
+        
+        delay(100); //make sure the sensor is powered
+         
+        //stop power 
+        digitalWrite(sensorVCC, LOW); 
 
-    // Make it rain during 30 s
+      Serial.print(sensorValue);
+      Serial.print("\n");
+      
+      if( sensorValue > hum_thresh ) // Check wether sensor give value below treshold
+    {
+    // Make it rain during 10 s
     digitalWrite(out_pin, HIGH);
-    delay(30000);
+    delay(10000);
     digitalWrite(out_pin, LOW);       
-
+    }
     start_time = millis(); // Initial time when turned on
 }
  
